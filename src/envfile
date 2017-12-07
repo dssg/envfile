@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Check for help request and argumentation errors
+
+help () {
+    echo $0 path-to-environment-file command [command-args]
+}
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+    help
+    exit 0
+fi
+
+if [ ! -f "$1" ] || [ -z "$2" ]
+then
+    help
+    exit 1
+fi
+
+# Declare targets
+
+envfile="$1"
+shift
+command="$@"
+
+# Execute
+
+<$envfile                                   \  # Read from environment file
+  /bin/grep -Ev "^#|^$"    |                \  # remove commented and empty lines
+  /usr/bin/paste -s -d " " |                \  # squash into a single line
+  /usr/bin/xargs -iVARS 		    \  # load stdin into argument VARS
+    /bin/sh -c "/usr/bin/env VARS $command"    # execute command in modified environment
