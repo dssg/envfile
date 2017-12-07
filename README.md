@@ -1,6 +1,6 @@
 # envfile
 
-POSIX-compatible script – like `env` – to run a program in an environment modified by values set in a *file* at the specified path.
+POSIX-compatible script, like `env`, to run a program in an environment modified by values set in a *file* at the specified path.
 
 This achieves the same as:
 
@@ -28,7 +28,7 @@ like in the previous, on-the-fly examples, without polluting the user's shell en
 
 ## Alternatives
 
-It should be noted that something similar may be achieved with subshells:
+It should be noted that something similar may be achieved with the source operator in a subshell:
 
     (. dev.env && echo $NAME1)
 
